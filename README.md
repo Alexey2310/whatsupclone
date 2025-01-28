@@ -18,6 +18,7 @@
 3. **Запустите сервер разработки**:
    ```bash
    npm run dev
+   https://github.com/Alexey2310/whatsupclone/blob/main/README.md
    ```
 
 4. **Откройте ваш браузер** и перейдите по адресу `http://localhost:5173`, чтобы просмотреть приложение.

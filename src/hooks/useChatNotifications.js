@@ -14,7 +14,6 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
         )
 
         if (notification && notification.body) {
-          // Defensive checks for notification structure
           if (notification.body.typeWebhook === 'incomingMessageReceived') {
             const message = notification.body.messageData.textMessageData
               ? notification.body.messageData.textMessageData.textMessage
@@ -66,7 +65,6 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
             notification.body.typeWebhook !== 'outgoingMessageStatus' &&
             notification.body.typeWebhook !== 'stateInstanceChanged'
           ) {
-            // не выводим ошибку, если тип вебхука равен null или undefined
             if (notification.body.typeWebhook !== null && notification.body.typeWebhook !== undefined) {
               console.error(
                 'Notification structure is not as expected:',
@@ -75,7 +73,6 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
             }
           }
         } else {
-          // не выводим ошибку, если notification равен null или undefined
           if (notification !== null && notification !== undefined) {
             console.error('Notification is null or undefined')
           }
