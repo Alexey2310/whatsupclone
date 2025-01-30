@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import ChatForm from './ChatForm'
 import { FcOk } from "react-icons/fc";
 import PropTypes from 'prop-types'
+import { loadChatData, saveChatData } from '../utils/localstorageHelpers'
 
 const Chat = ({ idInstance, apiTokenInstance }) => {
 	const [chatId, setChatId] = useState('')
@@ -22,10 +23,20 @@ const Chat = ({ idInstance, apiTokenInstance }) => {
 	const onSubmit = (data) => {
 		setChatId(data.chatId)
 		setMessages([])
+		loadChatData(data.chatId,setMessages)
 	}
 
-	useChatNotifications(idInstance, apiTokenInstance, chatId, setMessages)
-
+	useChatNotifications(idInstance, apiTokenInstance, chatId, (newMessage) => {
+		setMessages((prevMessages) => [...prevMessages, newMessage])
+	})
+useEffect(()=>{
+	saveChatData(chatId,messages)
+},[messages,chatId])
+useEffect(()=>{
+	if(chatId){
+		loadChatData(chatId,setMessages)
+	}
+},[chatId])
 	useEffect(() => {
 		const chatContainer = contaunerRef.current
 		if (chatContainer) {

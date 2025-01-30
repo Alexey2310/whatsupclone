@@ -33,6 +33,7 @@ const App = () => {
 	return (
 		<>
 			<Header />
+			<main>
 			{!isAuthenticated ? (
 				<LoginForm onLogin={handleLogin} />
 			) : (
@@ -41,6 +42,9 @@ const App = () => {
 					apiTokenInstance={apiTokenInstance}
 				/>
 			)}
+
+			</main>
+		
 		</>
 	)
 }

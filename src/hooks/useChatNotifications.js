@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { receiveNotification, deleteNotification } from '../api/green-api'
 
-const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages) => {
+const useChatNotifications = (idInstance, apiTokenInstance, chatId, callback) => {
   useEffect(() => {
     if (!chatId) return
 
@@ -22,7 +22,7 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
               : null
 
             if (message) {
-              setMessages((prevMessages) => [...prevMessages, message])
+              callback(message)
             }
           } else if (notification.body.typeWebhook === 'outgoingAPIMessageReceived') {
             const message = notification.body.messageData.extendedTextMessageData
@@ -30,7 +30,7 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
               : null
 
             if (message) {
-              setMessages((prevMessages) => [...prevMessages, message])
+              callback(message)
             }
           } else if (notification.body.typeWebhook === 'outgoingMessageReceived') {
             const message = notification.body.messageData.textMessageData
@@ -38,7 +38,7 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
               : null
 
             if (message) {
-              setMessages((prevMessages) => [...prevMessages, message])
+              callback(message)
             }
           }
 
@@ -87,7 +87,7 @@ const useChatNotifications = (idInstance, apiTokenInstance, chatId, setMessages)
     return () => {
       clearInterval(intervalId)
     }
-  }, [chatId, idInstance, apiTokenInstance, setMessages])
+  }, [chatId, idInstance, apiTokenInstance, callback])
 }
 
 export default useChatNotifications
